@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "942258009328",
+    "firebase_url": "https://make-it-white.firebaseio.com",
+    "project_id": "make-it-white",
+    "storage_bucket": "make-it-white.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942258009328:android:dd0e4c45c27a6325",
+        "android_client_info": {
+          "package_name": "com.example.or.makeitwhite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942258009328-2l2inh4nnus3ggvqq3u0ah0h38gjsqo7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLz3fiZ1_DLTPpVTrgzngfc9Hr-Y2w4BA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
