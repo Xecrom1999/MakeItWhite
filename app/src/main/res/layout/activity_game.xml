@@ -15,7 +15,8 @@
     android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
     android:layout_width="158dp"
-    android:layout_height="208dp">
+    android:layout_height="208dp"
+    android:id="@+id/frameLayout">
     <fragment
         android:layout_width="150dp"
         android:layout_height="200dp"
@@ -84,6 +85,13 @@
         android:text="New Button"
         android:onClick="onC"
         android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chrono"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
