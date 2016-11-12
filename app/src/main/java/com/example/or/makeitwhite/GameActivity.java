@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.util.Random;
 import java.util.logging.Handler;
 
@@ -23,6 +27,8 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     int secs;
     int mins;
     int milliseconds;
+
+    InterstitialAd mInterstitialAd;
 
     Runnable updateTimerThread = new Runnable() {
         @Override
@@ -58,6 +64,28 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         fragments[1] = (ColorFragment)fm.findFragmentById(R.id.fragment2);
         fragments[2] = (ColorFragment)fm.findFragmentById(R.id.fragment3);
         fragments[3] = (ColorFragment)fm.findFragmentById(R.id.fragment4);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                gameEnded();
+            }
+        });
+
+        requestNewInterstitial();
+    }
+
+    private void gameEnded() {
+
+        Intent i = new Intent(this, GameOverActivity.class);
+        i.putExtra("mins", mins);
+        i.putExtra("secs", secs);
+        i.putExtra("mills", milliseconds);
+        startActivity(i);
     }
 
     public void requestRandomClick(){
@@ -67,18 +95,24 @@ public class GameActivity extends AppCompatActivity implements Communicator {
             Random rnd = new Random();
             num = rnd.nextInt(4);
             if(fragments[num].active) f = true;
-            if(!fragments[0].active && !fragments[1].active && !fragments[2].active && !fragments[3].active){
-                Intent i = new Intent(this, GameOverActivity.class);
-                i.putExtra("mins", mins);
-                i.putExtra("secs", secs);
-                i.putExtra("mills", milliseconds);
-                startActivity(i);
+            if(!fragments[0].active && !fragments[1].active && !fragments[2].active && !fragments[3].active) {
+
+                if (mInterstitialAd.isLoaded())
+                    mInterstitialAd.show();
+                else gameEnded();
+
                 stopTimer();
                 f = true;
                 finish();
             }
         }
         fragments[num].setAsClickable();
+    }
+
+    private void requestNewInterstitial() {
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitialAd.loadAd(adRequest);
     }
 
     @Override
