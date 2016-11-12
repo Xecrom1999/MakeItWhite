@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
-
+//
     public void onClick(View v){
         startActivity(new Intent(this, GameActivity.class));
     }
