@@ -29,4 +29,6 @@ public class GameOverActivity extends AppCompatActivity {
         time_text.setText("Your time: " + time);
 
     }
+
+
 }

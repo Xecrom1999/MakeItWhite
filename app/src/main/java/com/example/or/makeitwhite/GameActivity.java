@@ -89,4 +89,5 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         handler.removeCallbacks(updateTimerThread);
     }
 
+
 }
