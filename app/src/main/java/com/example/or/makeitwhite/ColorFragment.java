@@ -59,65 +59,93 @@ public class ColorFragment extends Fragment {
         "#cccccc",
         "#e5e5e5",
         "#ffffff"};
-        blueColors = new String[]{"#0099cc",
-        "#0089b7",
-        "#007aa3",
-        "#006b8e",
-        "#005b7a",
-        "#004c66",
-        "#003d51",
-        "#002d3d",
-        "#001e28",
-        "#000f14"};
-        redColors = new String[]{"#9c2929",
-        "#8c2424",
-        "#7c2020",
-        "#6d1c1c",
-        "#5d1818",
-        "#4e1414",
-        "#3e1010",
-        "#2e0c0c",
-        "#1f0808",
-        "#0f0404"};
-        yellowColors = new String[]{"#ffe54c",
-        "#e5ce44",
-        "#ccb73c",
-        "#b2a035",
-        "#99892d",
-        "#7f7226",
-        "#665b1e",
-        "#4c4416",
-        "#332d0f",
-        "#191607"};
-        greenColors = new String[]{"#13d601",
-        "#11c000",
-        "#0fab00",
-        "#0d9500",
-        "#0b8000",
-        "#096b00",
-        "#075500",
-        "#054000",
-        "#032a00",
-        "#011500"};
+        blueColors = new String[]{"#0c4dff",
+        "#245eff",
+        "#3c70ff",
+        "#5482ff",
+        "#6d94ff",
+        "#85a6ff",
+        "#9db7ff",
+        "#b6c9ff",
+        "#cedbff",
+        "#e6edff",
+        "#ffffff"};
+        redColors = new String[]{"#e72020",
+        "#e93636",
+        "#eb4c4c",
+        "#ee6262",
+        "#f07979",
+        "#f38f8f",
+        "#f5a5a5",
+        "#f7bcbc",
+        "#fad2d2",
+        "#fce8e8",
+        "#ffffff"};
+        yellowColors = new String[]{"#d09300",
+        "#d49d19",
+        "#d9a832",
+        "#deb34c",
+        "#e2be66",
+        "#e7c97f",
+        "#ecd399",
+        "#f0deb2",
+        "#f5e9cc",
+        "#faf4e5",
+        "#ffffff"};
+        greenColors = new String[]{"#099c21",
+        "#21a537",
+        "#3aaf4d",
+        "#52b963",
+        "#6bc379",
+        "#84cd90",
+        "#9cd7a6",
+        "#b5e1bc",
+        "#cdebd2",
+        "#e6f5e8",
+        "#ffffff"};
         position=0;
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
         clickable = false;
-        Random rnd = new Random();
-        firstColor = rnd.nextInt(4);
-        switch(firstColor){
-            case 0:
-                layout.setBackgroundColor(Color.parseColor(blueColors[0]));
-                break;
-            case 1:
-                layout.setBackgroundColor(Color.parseColor(redColors[0]));
-                break;
-            case 2:
-                layout.setBackgroundColor(Color.parseColor(yellowColors[0]));
-                break;
-            case 3:
-                layout.setBackgroundColor(Color.parseColor(greenColors[0]));
-                break;
+        Random rnd;
+        boolean f = false;
+        while(!f){
+
+            rnd = new Random();
+            firstColor = rnd.nextInt(4);
+
+            switch(firstColor){
+                case 0:
+                    if(!comm.getBlue()) {
+                        layout.setBackgroundColor(Color.parseColor(blueColors[0]));
+                        comm.setBlueTrue();
+                        f = true;
+                    }
+                    break;
+                case 1:
+                    if(!comm.getRed()) {
+                        layout.setBackgroundColor(Color.parseColor(redColors[0]));
+                        comm.setRedTrue();
+                        f = true;
+                    }
+                    break;
+                case 2:
+                    if(!comm.getYellow()) {
+                        layout.setBackgroundColor(Color.parseColor(yellowColors[0]));
+                        comm.setYellowTrue();
+                        f = true;
+                    }
+                    break;
+                case 3:
+                    if(!comm.getGreen()) {
+                        layout.setBackgroundColor(Color.parseColor(greenColors[0]));
+                        comm.setGreenTrue();
+                        f = true;
+                    }
+                    break;
+
+            }
         }
+
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,13 +181,8 @@ public class ColorFragment extends Fragment {
 
     public void lowerColor(String[] firstColors){
         position+=1;
-        if(position==21) active = false;
-        else if(position<10){
+        if(position==10) active = false;
             layout.setBackgroundColor(Color.parseColor(firstColors[position]));
-        }
-        else if(position<21){
-            layout.setBackgroundColor(Color.parseColor(whiteColors[position-10]));
-        }
 
     }
 

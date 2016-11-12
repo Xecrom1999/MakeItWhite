@@ -18,6 +18,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     ColorFragment[] fragments;
     FragmentManager fm;
     android.os.Handler handler = new android.os.Handler();
+    boolean blue, red, yellow, green;
     long startTime = 0L, timeInMilliseconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
     int secs;
     int mins;
@@ -46,6 +47,11 @@ public class GameActivity extends AppCompatActivity implements Communicator {
 
         timer_text = (TextView) findViewById(R.id.timer_text);
 
+        blue = false;
+        yellow = false;
+        red = false;
+        green = false;
+
         fm = getSupportFragmentManager();
         fragments = new ColorFragment[4];
         fragments[0] = (ColorFragment)fm.findFragmentById(R.id.fragment);
@@ -69,9 +75,50 @@ public class GameActivity extends AppCompatActivity implements Communicator {
                 startActivity(i);
                 stopTimer();
                 f = true;
+                finish();
             }
         }
         fragments[num].setAsClickable();
+    }
+
+    @Override
+    public boolean getBlue() {
+        return blue;
+    }
+
+    @Override
+    public boolean getGreen() {
+        return green;
+    }
+
+    @Override
+    public boolean getYellow() {
+        return yellow;
+    }
+
+    @Override
+    public void setBlueTrue() {
+        blue = true;
+    }
+
+    @Override
+    public void setGreenTrue() {
+        green = true;
+    }
+
+    @Override
+    public void setRedTrue() {
+        red = true;
+    }
+
+    @Override
+    public void setYellowTrue() {
+        yellow = true;
+    }
+
+    @Override
+    public boolean getRed() {
+        return red;
     }
 
     public void startGame(View v){
