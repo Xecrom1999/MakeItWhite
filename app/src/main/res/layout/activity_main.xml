@@ -28,5 +28,4 @@
         android:id="@+id/button"
         android:onClick="onClick" />
 
-
 </RelativeLayout>

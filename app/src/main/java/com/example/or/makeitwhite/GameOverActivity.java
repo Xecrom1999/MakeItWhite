@@ -27,6 +27,6 @@ public class GameOverActivity extends AppCompatActivity {
         if (mins > 0) time = mins + ":" + time;
 
         time_text.setText("Your time: " + time);
-//
+
     }
 }
