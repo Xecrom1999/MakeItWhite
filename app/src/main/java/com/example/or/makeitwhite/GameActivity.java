@@ -120,10 +120,10 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         int height = rnd1.nextInt(dpToPx(150))+100;
         gameLayout.getLayoutParams().width = width;
         gameLayout.getLayoutParams().height = height;
-        int w = size.x - gameLayout.getWidth();
-        int h = size.y - gameLayout.getHeight();
-        int x = rnd.nextInt(w);
-        int y = rnd.nextInt(h);
+        int w = size.x - gameLayout.getWidth() - dpToPx(20);
+        int h = size.y - gameLayout.getHeight() - dpToPx(20);
+        int x = rnd.nextInt(w) + dpToPx(20);
+        int y = rnd.nextInt(h) + dpToPx(20);
         gameLayout.setX(x);
         gameLayout.setY(y);
     }
