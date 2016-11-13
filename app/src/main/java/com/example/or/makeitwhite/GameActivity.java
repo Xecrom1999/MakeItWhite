@@ -1,12 +1,19 @@
 package com.example.or.makeitwhite;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Chronometer;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -19,14 +26,16 @@ import java.util.logging.Handler;
 public class GameActivity extends AppCompatActivity implements Communicator {
 
     TextView timer_text;
+    TextView score_text;
     ColorFragment[] fragments;
     FragmentManager fm;
     android.os.Handler handler = new android.os.Handler();
-    boolean blue, red, yellow, green;
     long startTime = 0L, timeInMilliseconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
     int secs;
     int mins;
     int milliseconds;
+    static int score;
+    FrameLayout gameLayout;
 
     InterstitialAd mInterstitialAd;
 
@@ -38,8 +47,12 @@ public class GameActivity extends AppCompatActivity implements Communicator {
             secs = (int) updateTime / 1000;
             mins = (int) secs / 60;
             secs %= 60;
+            if (secs == 15) {
+                gameEnded();
+                timer_text.setText("00:00");
+            }
             milliseconds = (int) updateTime % 1000;
-            String time = String.format("%02d", secs) + ":" +  String.format("%03d", milliseconds);
+            String time = String.format("%02d", 14 - secs) + "." + (99 - (milliseconds / 10));
             if (mins > 0) time = mins + ":" + time;
             timer_text.setText(time);
             handler.postDelayed(this, 0);
@@ -52,22 +65,15 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         setContentView(R.layout.activity_game);
 
         timer_text = (TextView) findViewById(R.id.timer_text);
-
-        blue = false;
-        yellow = false;
-        red = false;
-        green = false;
+        score_text = (TextView)findViewById(R.id.score_text);
+        score = 0;
 
         fm = getSupportFragmentManager();
-        fragments = new ColorFragment[4];
-        fragments[0] = (ColorFragment)fm.findFragmentById(R.id.fragment);
-        fragments[1] = (ColorFragment)fm.findFragmentById(R.id.fragment2);
-        fragments[2] = (ColorFragment)fm.findFragmentById(R.id.fragment3);
-        fragments[3] = (ColorFragment)fm.findFragmentById(R.id.fragment4);
+        gameLayout = (FrameLayout)findViewById(R.id.gameLayout);
+
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
@@ -79,35 +85,55 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         requestNewInterstitial();
     }
 
+    public void updateScore(){
+        score_text.setText(""+score);
+    }
+
     private void gameEnded() {
 
+        if (mInterstitialAd.isLoaded())
+            mInterstitialAd.show();
+
+        stopTimer();
         Intent i = new Intent(this, GameOverActivity.class);
-        i.putExtra("mins", mins);
-        i.putExtra("secs", secs);
-        i.putExtra("mills", milliseconds);
+        i.putExtra("score", score);
         startActivity(i);
+        finish();
     }
 
     public void requestRandomClick(){
-        boolean f = false;
-        int num = 0;
-        while(!f){
-            Random rnd = new Random();
-            num = rnd.nextInt(4);
-            if(fragments[num].active) f = true;
-            if(!fragments[0].active && !fragments[1].active && !fragments[2].active && !fragments[3].active) {
 
-                if (mInterstitialAd.isLoaded())
-                    mInterstitialAd.show();
-                else gameEnded();
 
-                stopTimer();
-                f = true;
-                finish();
-            }
-        }
-        fragments[num].setAsClickable();
+
+        ColorFragment fragment = new ColorFragment();
+        Random rnd = new Random();
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.gameLayout, fragment).commit();
+        Random rnd1 = new Random();
+        int width = rnd1.nextInt(dpToPx(200))+75;
+        int height = rnd1.nextInt(dpToPx(150))+100;
+        gameLayout.getLayoutParams().width = width;
+        gameLayout.getLayoutParams().height = height;
+        int w = size.x - gameLayout.getWidth();
+        int h = size.y - gameLayout.getHeight();
+        int x = rnd.nextInt(w);
+        int y = rnd.nextInt(h);
+        gameLayout.setX(x);
+        gameLayout.setY(y);
+
     }
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
+
+
+
 
     private void requestNewInterstitial() {
 
@@ -115,45 +141,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         mInterstitialAd.loadAd(adRequest);
     }
 
-    @Override
-    public boolean getBlue() {
-        return blue;
-    }
 
-    @Override
-    public boolean getGreen() {
-        return green;
-    }
-
-    @Override
-    public boolean getYellow() {
-        return yellow;
-    }
-
-    @Override
-    public void setBlueTrue() {
-        blue = true;
-    }
-
-    @Override
-    public void setGreenTrue() {
-        green = true;
-    }
-
-    @Override
-    public void setRedTrue() {
-        red = true;
-    }
-
-    @Override
-    public void setYellowTrue() {
-        yellow = true;
-    }
-
-    @Override
-    public boolean getRed() {
-        return red;
-    }
 
     public void startGame(View v){
         requestRandomClick();

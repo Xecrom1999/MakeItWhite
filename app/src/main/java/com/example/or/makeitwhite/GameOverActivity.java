@@ -19,14 +19,9 @@ public class GameOverActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        int mins = intent.getIntExtra("mins", 0);
-        int secs = intent.getIntExtra("secs", 0);
-        int milliseconds = intent.getIntExtra("mills", 0);
+        int score = intent.getIntExtra("score",0);
 
-        String time = String.format("%02d", secs) + ":" +  String.format("%03d", milliseconds);
-        if (mins > 0) time = mins + ":" + time;
-
-        time_text.setText("Your time: " + time);
+        time_text.setText("Your score: " + score);
 
     }
 

@@ -6,14 +6,6 @@ package com.example.or.makeitwhite;
 interface Communicator {
 
     public void requestRandomClick();
+    public void updateScore();
 
-    public boolean getBlue();
-    public boolean getGreen();
-    public boolean getRed();
-    public boolean getYellow();
-
-    public void setBlueTrue();
-    public void setGreenTrue();
-    public void setRedTrue();
-    public void setYellowTrue();
 }

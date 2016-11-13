@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class ColorFragment extends Fragment {
     int position;
     int firstColor;
     View v;
-    FrameLayout r;
+
 
 
     public ColorFragment() {
@@ -41,13 +42,13 @@ public class ColorFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         active = true;
         comm = (Communicator)getActivity();
         v = inflater.inflate(R.layout.fragment_color, container, false);
-        r = (FrameLayout)v.getParent();
         whiteColors = new String[]{"#000000",
         "#191919",
         "#323232",
@@ -103,54 +104,35 @@ public class ColorFragment extends Fragment {
         "#cdebd2",
         "#e6f5e8",
         "#ffffff"};
-        position=0;
+        Random rnd1 = new Random();
+        position = rnd1.nextInt(8);
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
-        clickable = false;
-        Random rnd;
-        boolean f = false;
-        while(!f){
 
+        Random rnd;
             rnd = new Random();
             firstColor = rnd.nextInt(4);
 
             switch(firstColor){
                 case 0:
-                    if(!comm.getBlue()) {
-                        layout.setBackgroundColor(Color.parseColor(blueColors[0]));
-                        comm.setBlueTrue();
-                        f = true;
-                    }
+                        layout.setBackgroundColor(Color.parseColor(blueColors[position]));
                     break;
                 case 1:
-                    if(!comm.getRed()) {
-                        layout.setBackgroundColor(Color.parseColor(redColors[0]));
-                        comm.setRedTrue();
-                        f = true;
-                    }
+                        layout.setBackgroundColor(Color.parseColor(redColors[position]));
                     break;
                 case 2:
-                    if(!comm.getYellow()) {
-                        layout.setBackgroundColor(Color.parseColor(yellowColors[0]));
-                        comm.setYellowTrue();
-                        f = true;
-                    }
+                        layout.setBackgroundColor(Color.parseColor(yellowColors[position]));
                     break;
                 case 3:
-                    if(!comm.getGreen()) {
-                        layout.setBackgroundColor(Color.parseColor(greenColors[0]));
-                        comm.setGreenTrue();
-                        f = true;
-                    }
+                        layout.setBackgroundColor(Color.parseColor(greenColors[position]));
                     break;
 
             }
-        }
+
 
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(clickable){
                     switch(firstColor){
                         case 0:
                             lowerColor(blueColors);
@@ -165,13 +147,11 @@ public class ColorFragment extends Fragment {
                             lowerColor(greenColors);
                             break;
                     }
-                    r.setBackgroundColor(0x00000000);
-                    clickable = false;
-                    comm.requestRandomClick();
 
-
+                GameActivity.score += 1;
+                comm.updateScore();
                 }
-            }
+
         });
 
 
@@ -180,15 +160,14 @@ public class ColorFragment extends Fragment {
     }
 
     public void lowerColor(String[] firstColors){
-        position+=1;
-        if(position==10) active = false;
-            layout.setBackgroundColor(Color.parseColor(firstColors[position]));
+        position += 1;
+        if(position == 10){
+            active = false;
+            comm.requestRandomClick();
+        }
+        layout.setBackgroundColor(Color.parseColor(firstColors[position]));
 
     }
 
-    public void setAsClickable(){
-        clickable = true;
-        r = (FrameLayout)v.getParent();
-        r.setBackgroundColor(Color.parseColor("#2200ff"));
-    }
+
 }
