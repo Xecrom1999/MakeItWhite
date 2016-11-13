@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,4 +43,8 @@ public class GameOverActivity extends AppCompatActivity {
     }
 
 
+    public void playAgain(View view) {
+        startActivity(new Intent(this, GameActivity.class));
+        finish();
+    }
 }
