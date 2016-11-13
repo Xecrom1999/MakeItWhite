@@ -45,17 +45,19 @@ public class GameActivity extends AppCompatActivity implements Communicator {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updateTime = timeSwapBuff + timeInMilliseconds;
             secs = (int) updateTime / 1000;
-            mins = (int) secs / 60;
+            mins = secs / 60;
             secs %= 60;
             if (secs == 15) {
                 gameEnded();
-                timer_text.setText("00:00");
+                stopTimer();
             }
-            milliseconds = (int) updateTime % 1000;
-            String time = String.format("%02d", 14 - secs) + "." + (99 - (milliseconds / 10));
-            if (mins > 0) time = mins + ":" + time;
-            timer_text.setText(time);
-            handler.postDelayed(this, 0);
+            else {
+                milliseconds = (int) updateTime % 1000;
+                String time = String.format("%02d", 14 - secs) + "." + String.format("%02d", (99 - (milliseconds / 10)));
+                if (mins > 0) time = mins + ":" + time;
+                timer_text.setText(time);
+                handler.postDelayed(this, 0);
+            }
         }
     };
 
@@ -71,14 +73,16 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         fm = getSupportFragmentManager();
         gameLayout = (FrameLayout)findViewById(R.id.gameLayout);
 
-
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-                gameEnded();
+                Intent i = new Intent(getApplicationContext(), GameOverActivity.class);
+                i.putExtra("score", score);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -94,16 +98,15 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         if (mInterstitialAd.isLoaded())
             mInterstitialAd.show();
 
-        stopTimer();
-        Intent i = new Intent(this, GameOverActivity.class);
-        i.putExtra("score", score);
-        startActivity(i);
-        finish();
+        else {
+            Intent i = new Intent(this, GameOverActivity.class);
+            i.putExtra("score", score);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void requestRandomClick(){
-
-
 
         ColorFragment fragment = new ColorFragment();
         Random rnd = new Random();
@@ -123,7 +126,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         int y = rnd.nextInt(h);
         gameLayout.setX(x);
         gameLayout.setY(y);
-
     }
 
     public int dpToPx(int dp) {
@@ -131,9 +133,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         return px;
     }
-
-
-
 
     private void requestNewInterstitial() {
 
