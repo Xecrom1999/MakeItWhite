@@ -126,6 +126,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         int y = new Random().nextInt(h) + dpToPx(20);
         gameLayout.setX(x);
         gameLayout.setY(y);
+
     }
 
     public int dpToPx(int dp) {
