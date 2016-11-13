@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,21 +110,20 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     public void requestRandomClick(){
 
         ColorFragment fragment = new ColorFragment();
-        Random rnd = new Random();
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int sizeX = metrics.widthPixels;
+        int sizeY = metrics.heightPixels;
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.gameLayout, fragment).commit();
-        Random rnd1 = new Random();
-        int width = rnd1.nextInt(dpToPx(200))+75;
-        int height = rnd1.nextInt(dpToPx(150))+100;
+        int width = new Random().nextInt(dpToPx(200))+75;
+        int height = new Random().nextInt(dpToPx(150))+100;
         gameLayout.getLayoutParams().width = width;
         gameLayout.getLayoutParams().height = height;
-        int w = size.x - gameLayout.getWidth() - dpToPx(20);
-        int h = size.y - gameLayout.getHeight() - dpToPx(20);
-        int x = rnd.nextInt(w) + dpToPx(20);
-        int y = rnd.nextInt(h) + dpToPx(20);
+        int w = sizeX - width - dpToPx(40);
+        int h = sizeY - height - dpToPx(40);
+        int x = new Random().nextInt(w) + dpToPx(20);
+        int y = new Random().nextInt(h) + dpToPx(20);
         gameLayout.setX(x);
         gameLayout.setY(y);
     }
