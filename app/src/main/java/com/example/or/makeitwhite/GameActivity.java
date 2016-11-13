@@ -156,6 +156,4 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         timeSwapBuff += timeInMilliseconds;
         handler.removeCallbacks(updateTimerThread);
     }
-
-
 }
