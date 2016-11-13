@@ -17,6 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="69dp"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
@@ -34,10 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:text="Your score: "
+        android:text="Best score: "
         android:textColor="@android:color/secondary_text_light"
-        android:id="@+id/score_text"
-        android:layout_marginTop="150dp"
+        android:id="@+id/best_score_text"
+        android:layout_marginTop="100dp"
         android:layout_gravity="center_horizontal"
         />
 </LinearLayout>
