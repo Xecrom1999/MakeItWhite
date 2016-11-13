@@ -133,7 +133,8 @@ public class ColorFragment extends Fragment {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    switch(firstColor){
+                if(active) {
+                    switch (firstColor) {
                         case 0:
                             lowerColor(blueColors);
                             break;
@@ -147,6 +148,7 @@ public class ColorFragment extends Fragment {
                             lowerColor(greenColors);
                             break;
                     }
+                }
 
                 GameActivity.score += 1;
                 comm.updateScore();
