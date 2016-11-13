@@ -32,6 +32,19 @@ public class GameOverActivity extends AppCompatActivity {
 
         int score = intent.getIntExtra("score",0);
 
+        if (score < 10)
+            Toast.makeText(getApplicationContext(), "You're gay!", Toast.LENGTH_SHORT).show();
+        else if (score < 50)
+            Toast.makeText(getApplicationContext(), "Less than 50? probably a woman!", Toast.LENGTH_SHORT).show();
+        else if (score < 60)
+            Toast.makeText(getApplicationContext(), "Not enough", Toast.LENGTH_SHORT).show();
+        else if (score < 70)
+            Toast.makeText(getApplicationContext(), "At least 70 points", Toast.LENGTH_SHORT).show();
+        else if (score < 80)
+            Toast.makeText(getApplicationContext(), "You're the best!", Toast.LENGTH_SHORT).show();
+        else if (score < 80)
+            Toast.makeText(getApplicationContext(), "Impossible skills!", Toast.LENGTH_SHORT).show();
+
         if (score > bestScore) {
             bestScore = score;
             preferences.edit().putInt("bestScore", bestScore).commit();
