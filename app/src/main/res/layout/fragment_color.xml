@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/colorBackground"
-    android:background="@android:color/black"
+    android:background="@drawable/item_drawable"
     tools:context="com.example.or.makeitwhite.ColorFragment">
 
 

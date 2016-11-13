@@ -4,6 +4,9 @@ package com.example.or.makeitwhite;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -33,8 +36,7 @@ public class ColorFragment extends Fragment {
     int position;
     int firstColor;
     View v;
-
-
+    GradientDrawable background;
 
     public ColorFragment() {
         // Required empty public constructor
@@ -108,22 +110,25 @@ public class ColorFragment extends Fragment {
         position = rnd1.nextInt(8);
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
 
+        Drawable background1 = layout.getBackground();
+        background = (GradientDrawable) background1;
+
         Random rnd;
             rnd = new Random();
             firstColor = rnd.nextInt(4);
 
             switch(firstColor){
                 case 0:
-                        layout.setBackgroundColor(Color.parseColor(blueColors[position]));
+                    background.setColor(Color.parseColor(blueColors[position]));
                     break;
                 case 1:
-                        layout.setBackgroundColor(Color.parseColor(redColors[position]));
+                    background.setColor(Color.parseColor(redColors[position]));
                     break;
                 case 2:
-                        layout.setBackgroundColor(Color.parseColor(yellowColors[position]));
+                    background.setColor(Color.parseColor(yellowColors[position]));
                     break;
                 case 3:
-                        layout.setBackgroundColor(Color.parseColor(greenColors[position]));
+                    background.setColor(Color.parseColor(greenColors[position]));
                     break;
 
             }
@@ -149,15 +154,11 @@ public class ColorFragment extends Fragment {
                             break;
                     }
                 }
-
                 GameActivity.score += 1;
                 comm.updateScore();
                 }
 
         });
-
-
-
         return v;
     }
 
@@ -167,7 +168,7 @@ public class ColorFragment extends Fragment {
             active = false;
             comm.requestRandomClick();
         }
-        layout.setBackgroundColor(Color.parseColor(firstColors[position]));
+        background.setColor(Color.parseColor(firstColors[position]));
 
     }
 

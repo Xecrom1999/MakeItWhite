@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameOverActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class GameOverActivity extends AppCompatActivity {
         if (score > bestScore) {
             bestScore = score;
             preferences.edit().putInt("bestScore", bestScore).commit();
+            Toast.makeText(getApplicationContext(), "It's a new best score Oh My God! אללה וואכבר", Toast.LENGTH_SHORT).show();
         }
 
         time_text.setText("Your score: " + score);

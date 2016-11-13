@@ -140,8 +140,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         mInterstitialAd.loadAd(adRequest);
     }
 
-
-
     public void startGame(View v){
         requestRandomClick();
         startTimer();
