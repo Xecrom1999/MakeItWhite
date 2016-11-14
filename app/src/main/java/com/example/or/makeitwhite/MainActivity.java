@@ -1,16 +1,19 @@
 package com.example.or.makeitwhite;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         mAdView.loadAd(adRequest);
         mAdView1.loadAd(adRequest1);
+
+        logo = (TextView)findViewById(R.id.make_it_white);
+        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        logo.setTypeface(myFont);
     }
 
     public void onClick(View v){
