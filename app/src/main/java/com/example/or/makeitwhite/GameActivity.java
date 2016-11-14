@@ -118,10 +118,10 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     public void startGame(final View v){
         Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
         v.startAnimation(fadeInAnimation);
+        v.setClickable(false);
         fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
