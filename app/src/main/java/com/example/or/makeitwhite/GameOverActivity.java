@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 public class GameOverActivity extends AppCompatActivity {
 
     TextView time_text;
@@ -15,11 +19,16 @@ public class GameOverActivity extends AppCompatActivity {
     Intent intent;
     SharedPreferences preferences;
     int bestScore;
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over_layout);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        requestNewInterstitial();
 
         preferences = getSharedPreferences("Data", MODE_PRIVATE);
 
@@ -53,9 +62,28 @@ public class GameOverActivity extends AppCompatActivity {
 
         time_text.setText("Your score: " + score);
         best_score_text.setText("Best score: " + bestScore);
+
+
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+        if (mInterstitialAd.isLoaded())
+            mInterstitialAd.show();
+        else Toast.makeText(GameOverActivity.this, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", Toast.LENGTH_SHORT).show();
     }
 
 
+
+
+    private void requestNewInterstitial() {
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitialAd.loadAd(adRequest);
+    }
     public void playAgain(View view) {
         startActivity(new Intent(this, GameActivity.class));
         finish();

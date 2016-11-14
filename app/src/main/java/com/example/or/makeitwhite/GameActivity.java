@@ -38,8 +38,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     static int score;
     FrameLayout gameLayout;
 
-    InterstitialAd mInterstitialAd;
-
     Runnable updateTimerThread = new Runnable() {
         @Override
         public void run() {
@@ -74,20 +72,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         fm = getSupportFragmentManager();
         gameLayout = (FrameLayout)findViewById(R.id.gameLayout);
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-                Intent i = new Intent(getApplicationContext(), GameOverActivity.class);
-                i.putExtra("score", score);
-                startActivity(i);
-                finish();
-            }
-        });
-
-        requestNewInterstitial();
     }
 
     public void updateScore(){
@@ -95,16 +79,10 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     }
 
     private void gameEnded() {
-
-        if (mInterstitialAd.isLoaded())
-            mInterstitialAd.show();
-
-        else {
-            Intent i = new Intent(this, GameOverActivity.class);
-            i.putExtra("score", score);
-            startActivity(i);
-            finish();
-        }
+        Intent i = new Intent(this, GameOverActivity.class);
+        i.putExtra("score", score);
+        startActivity(i);
+        finish();
     }
 
     public void requestRandomClick(){
@@ -121,9 +99,9 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         gameLayout.getLayoutParams().width = width;
         gameLayout.getLayoutParams().height = height;
         int w = sizeX - width - dpToPx(40);
-        int h = sizeY - height - dpToPx(40);
+        int h = sizeY - height - dpToPx(60);
         int x = new Random().nextInt(w) + dpToPx(20);
-        int y = new Random().nextInt(h) + dpToPx(20);
+        int y = new Random().nextInt(h) + dpToPx(40);
         gameLayout.setX(x);
         gameLayout.setY(y);
 
@@ -135,11 +113,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         return px;
     }
 
-    private void requestNewInterstitial() {
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mInterstitialAd.loadAd(adRequest);
-    }
 
     public void startGame(View v){
         requestRandomClick();
