@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -28,14 +30,13 @@ public class GameActivity extends AppCompatActivity implements Communicator {
 
     TextView timer_text;
     TextView score_text;
-    ColorFragment[] fragments;
     FragmentManager fm;
     android.os.Handler handler = new android.os.Handler();
     long startTime = 0L, timeInMilliseconds = 0L, timeSwapBuff = 0L, updateTime = 0L;
     int secs;
     int mins;
     int milliseconds;
-    static int score;
+    int score;
     FrameLayout gameLayout;
 
     Runnable updateTimerThread = new Runnable() {
@@ -48,7 +49,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
             secs %= 60;
             if (secs == 15) {
                 gameEnded();
-                stopTimer();
             }
             else {
                 milliseconds = (int) updateTime % 1000;
@@ -75,12 +75,14 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     }
 
     public void updateScore(){
+        score++;
         score_text.setText(""+score);
     }
 
     private void gameEnded() {
         Intent i = new Intent(this, GameOverActivity.class);
         i.putExtra("score", score);
+        stopTimer();
         startActivity(i);
         finish();
     }
@@ -113,9 +115,25 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         return px;
     }
 
+    public void startGame(final View v){
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
+        v.startAnimation(fadeInAnimation);
+        fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
+            }
 
-    public void startGame(View v){
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                v.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         requestRandomClick();
         startTimer();
     }
@@ -128,5 +146,13 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     private void stopTimer() {
         timeSwapBuff += timeInMilliseconds;
         handler.removeCallbacks(updateTimerThread);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        stopTimer();
+        finish();
     }
 }

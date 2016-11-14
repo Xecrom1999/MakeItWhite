@@ -1,7 +1,4 @@
 <resources>
     <string name="app_name">Make It White</string>
     <string name="banner_ad_unit_id">ca-app-pub-8045128595154184/1925228952</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

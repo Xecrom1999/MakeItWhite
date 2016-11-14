@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -27,8 +29,7 @@ public class ColorFragment extends Fragment {
 
     RelativeLayout layout;
     Communicator comm;
-    boolean clickable, active;
-    String[] whiteColors;
+    boolean active;
     String[] blueColors;
     String[] redColors;
     String[] yellowColors;
@@ -37,103 +38,50 @@ public class ColorFragment extends Fragment {
     int firstColor;
     View v;
     GradientDrawable background;
+    TextView taps_left_text;
+    int tapsLeft;
 
     public ColorFragment() {
-        // Required empty public constructor
-
     }
 
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        v = inflater.inflate(R.layout.fragment_color, container, false);
+
         active = true;
         comm = (Communicator)getActivity();
-        v = inflater.inflate(R.layout.fragment_color, container, false);
-        whiteColors = new String[]{"#000000",
-        "#191919",
-        "#323232",
-        "#4c4c4c",
-        "#666666",
-        "#7f7f7f",
-        "#999999",
-        "#b2b2b2",
-        "#cccccc",
-        "#e5e5e5",
-        "#ffffff"};
-        blueColors = new String[]{"#0c4dff",
-        "#245eff",
-        "#3c70ff",
-        "#5482ff",
-        "#6d94ff",
-        "#85a6ff",
-        "#9db7ff",
-        "#b6c9ff",
-        "#cedbff",
-        "#e6edff",
-        "#ffffff"};
-        redColors = new String[]{"#e72020",
-        "#e93636",
-        "#eb4c4c",
-        "#ee6262",
-        "#f07979",
-        "#f38f8f",
-        "#f5a5a5",
-        "#f7bcbc",
-        "#fad2d2",
-        "#fce8e8",
-        "#ffffff"};
-        yellowColors = new String[]{"#d09300",
-        "#d49d19",
-        "#d9a832",
-        "#deb34c",
-        "#e2be66",
-        "#e7c97f",
-        "#ecd399",
-        "#f0deb2",
-        "#f5e9cc",
-        "#faf4e5",
-        "#ffffff"};
-        greenColors = new String[]{"#099c21",
-        "#21a537",
-        "#3aaf4d",
-        "#52b963",
-        "#6bc379",
-        "#84cd90",
-        "#9cd7a6",
-        "#b5e1bc",
-        "#cdebd2",
-        "#e6f5e8",
-        "#ffffff"};
+        blueColors = new String[]{"#0D47A1", "#1565C0", "#1976D2", "#1E88E5", "#2196F3", "#42A5F5", "#64B5F6", "#90CAF9", "#BBDEFB", "#E3F2FD", "#ffffff"};
+        redColors = new String[]{"#B71C1C", "#C62828", "#D32F2F", "#E53935", "#F44336", "#EF5350", "#E57373", "#EF9A9A", "#FFCDD2", "#FFEBEE", "#ffffff"};
+        yellowColors = new String[]{"#F57F17", "#F9A825", "#FBC02D", "#FDD835", "#FFEB3B", "#FFEE58", "#FFF176", "#FFF59D", "#FFF9C4", "#FFFDE7", "#ffffff"};
+        greenColors = new String[]{"#1B5E20", "#2E7D32", "#388E3C", "#43A047", "#4CAF50", "#66BB6A", "#81C784", "#A5D6A7", "#C8E6C9", "#E8F5E9", "#ffffff"};
         Random rnd1 = new Random();
         position = rnd1.nextInt(8);
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
-
         Drawable background1 = layout.getBackground();
         background = (GradientDrawable) background1;
 
+        tapsLeft = 10 - position;
+
         Random rnd;
-            rnd = new Random();
-            firstColor = rnd.nextInt(4);
+        rnd = new Random();
+        firstColor = rnd.nextInt(4);
 
-            switch(firstColor){
-                case 0:
-                    background.setColor(Color.parseColor(blueColors[position]));
-                    break;
-                case 1:
-                    background.setColor(Color.parseColor(redColors[position]));
-                    break;
-                case 2:
-                    background.setColor(Color.parseColor(yellowColors[position]));
-                    break;
-                case 3:
-                    background.setColor(Color.parseColor(greenColors[position]));
-                    break;
+        switch(firstColor){
+            case 0:
+                background.setColor(Color.parseColor(blueColors[position]));
+                break;
+            case 1:
+                background.setColor(Color.parseColor(redColors[position]));
+                break;
+            case 2:
+                background.setColor(Color.parseColor(yellowColors[position]));
+                break;
+            case 3:
+                background.setColor(Color.parseColor(greenColors[position]));
+                break;
 
-            }
-
-
+        }
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,12 +102,21 @@ public class ColorFragment extends Fragment {
                             break;
                     }
                 }
-                GameActivity.score += 1;
                 comm.updateScore();
+                tapsLeft -= 1;
+                taps_left_text.setText(tapsLeft+"");
                 }
 
         });
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        taps_left_text = (TextView) view.findViewById(R.id.taps_left_text);
+        taps_left_text.setText(tapsLeft+"");
     }
 
     public void lowerColor(String[] firstColors){

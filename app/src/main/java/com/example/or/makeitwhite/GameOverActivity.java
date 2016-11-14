@@ -20,15 +20,35 @@ public class GameOverActivity extends AppCompatActivity {
     SharedPreferences preferences;
     int bestScore;
     InterstitialAd mInterstitialAd;
+    boolean f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over_layout);
 
+        f = false;
+
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
         requestNewInterstitial();
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+
+                mInterstitialAd.show();
+            }
+        });
 
         preferences = getSharedPreferences("Data", MODE_PRIVATE);
 
@@ -51,7 +71,7 @@ public class GameOverActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "At least 70 points", Toast.LENGTH_SHORT).show();
         else if (score < 80)
             Toast.makeText(getApplicationContext(), "You're the best!", Toast.LENGTH_SHORT).show();
-        else if (score < 80)
+        else if (score < 90)
             Toast.makeText(getApplicationContext(), "Impossible skills!", Toast.LENGTH_SHORT).show();
 
         if (score > bestScore) {
@@ -62,28 +82,13 @@ public class GameOverActivity extends AppCompatActivity {
 
         time_text.setText("Your score: " + score);
         best_score_text.setText("Best score: " + bestScore);
-
-
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-            }
-        });
-        if (mInterstitialAd.isLoaded())
-            mInterstitialAd.show();
-        else Toast.makeText(GameOverActivity.this, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", Toast.LENGTH_SHORT).show();
     }
 
-
-
-
     private void requestNewInterstitial() {
-
         AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
     }
+
     public void playAgain(View view) {
         startActivity(new Intent(this, GameActivity.class));
         finish();

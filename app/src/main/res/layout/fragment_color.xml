@@ -10,8 +10,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="10"
+    android:textSize="20dp"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
+    android:textColor="@android:color/black"
+    android:id="@+id/taps_left_text"
     />
 
 
