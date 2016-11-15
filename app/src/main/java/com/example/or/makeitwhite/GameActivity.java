@@ -2,6 +2,7 @@ package com.example.or.makeitwhite;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +39,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     int milliseconds;
     int score;
     FrameLayout gameLayout;
+    MediaPlayer gamingMusic;
 
     Runnable updateTimerThread = new Runnable() {
         @Override
@@ -65,6 +67,9 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        gamingMusic = MediaPlayer.create(this, R.raw.gaming_music);
+
+
         timer_text = (TextView) findViewById(R.id.timer_text);
         score_text = (TextView)findViewById(R.id.score_text);
         score = 0;
@@ -82,6 +87,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     private void gameEnded() {
         Intent i = new Intent(this, GameOverActivity.class);
         i.putExtra("score", score);
+        gamingMusic.stop();
         stopTimer();
         startActivity(i);
         finish();
@@ -116,9 +122,10 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     }
 
     public void startGame(final View v){
+        v.setClickable(false);
+        gamingMusic.start();
         Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
         v.startAnimation(fadeInAnimation);
-        v.setClickable(false);
         fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -134,6 +141,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
 
             }
         });
+
         requestRandomClick();
         startTimer();
     }
@@ -152,6 +160,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     protected void onPause() {
         super.onPause();
 
+        gamingMusic.stop();
         stopTimer();
         finish();
     }

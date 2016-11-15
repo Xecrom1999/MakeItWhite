@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -101,6 +102,7 @@ public class ColorFragment extends Fragment {
                             lowerColor(greenColors);
                             break;
                     }
+
                 }
                 comm.updateScore();
                 tapsLeft -= 1;
