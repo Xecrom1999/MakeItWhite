@@ -44,7 +44,7 @@
 
     <TextView
         android:layout_width="180dp"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:text="Play Again"
         android:textSize="30sp"
         android:textAllCaps="false"
@@ -56,6 +56,7 @@
         android:textStyle="bold"
         android:background="@drawable/play_button_drawable"
         android:translationZ="16dp"
+        android:padding="8dp"
         android:onClick="playAgain"/>
 
 </LinearLayout>

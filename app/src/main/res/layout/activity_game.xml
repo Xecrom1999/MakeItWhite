@@ -54,10 +54,11 @@
         android:id="@+id/add_time_text"
         android:text="+1.8"
         android:textColor="@android:color/primary_text_light"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:layout_below="@id/timer_text"
         android:layout_marginTop="8dp"
         android:layout_marginStart="32dp"
+        android:textStyle="bold"
         android:visibility="invisible"/>
 
 </RelativeLayout>

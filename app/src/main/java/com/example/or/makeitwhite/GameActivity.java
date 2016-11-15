@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -20,7 +21,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements Communicator {
+public class GameActivity extends AppCompatActivity implements Communicator, Animation.AnimationListener {
 
     TextView timer_text;
     TextView score_text;
@@ -35,7 +36,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     MediaPlayer gamingMusic;
     TextView count_down_text;
     TextView add_time_text;
-    Animation fadeAnimation;
     Animation floatAnimation;
 
     Runnable updateTimerThread = new Runnable() {
@@ -64,7 +64,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
         floatAnimation = AnimationUtils.loadAnimation(this, R.anim.float_anim);
         floatAnimation.setDuration(1000);
 
@@ -85,27 +84,19 @@ public class GameActivity extends AppCompatActivity implements Communicator {
 
         add_time_text = (TextView) findViewById(R.id.add_time_text);
 
-        floatAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                add_time_text.setVisibility(View.VISIBLE);
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                add_time_text.setVisibility(View.INVISIBLE);
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
+        floatAnimation.setAnimationListener(this);
     }
 
     private void countDown(final TextView tv, final int count) {
 
+        Animation fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
+
+        tv.setVisibility(View.VISIBLE);
+
         String[] colors = new String[]{"#66BB6A", "#FFEE58", "#EF5350"};
 
         if (count == 0) {
-            tv.setText("");
+            tv.setVisibility(View.INVISIBLE);
             startGame();
             return;
         }
@@ -125,6 +116,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
             }
         });
         tv.startAnimation(fadeAnimation);
+
     }
 
     public void updateScore(){
@@ -198,5 +190,19 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         gamingMusic.stop();
         stopTimer();
         finish();
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+        add_time_text.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        add_time_text.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
     }
 }

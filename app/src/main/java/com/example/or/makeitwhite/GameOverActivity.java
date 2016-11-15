@@ -12,6 +12,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.Random;
+
 public class GameOverActivity extends AppCompatActivity {
 
     TextView time_text;
@@ -26,6 +28,8 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over_layout);
+
+        preferences = getSharedPreferences("Data", MODE_PRIVATE);
 
         f = false;
 
@@ -46,11 +50,13 @@ public class GameOverActivity extends AppCompatActivity {
             public void onAdLoaded() {
                 super.onAdLoaded();
 
+                int num = new Random().nextInt(2) + 1;
+
+                if (num == 1) return;
                 mInterstitialAd.show();
             }
         });
 
-        preferences = getSharedPreferences("Data", MODE_PRIVATE);
 
         bestScore = preferences.getInt("bestScore", 0);
 
@@ -60,19 +66,6 @@ public class GameOverActivity extends AppCompatActivity {
         intent = getIntent();
 
         int score = intent.getIntExtra("score",0);
-
-        if (score < 10)
-            Toast.makeText(getApplicationContext(), "You're gay!", Toast.LENGTH_SHORT).show();
-        else if (score < 50)
-            Toast.makeText(getApplicationContext(), "Less than 50? probably a woman!", Toast.LENGTH_SHORT).show();
-        else if (score < 60)
-            Toast.makeText(getApplicationContext(), "Not enough", Toast.LENGTH_SHORT).show();
-        else if (score < 70)
-            Toast.makeText(getApplicationContext(), "At least 70 points", Toast.LENGTH_SHORT).show();
-        else if (score < 80)
-            Toast.makeText(getApplicationContext(), "You're the best!", Toast.LENGTH_SHORT).show();
-        else if (score < 90)
-            Toast.makeText(getApplicationContext(), "Impossible skills!", Toast.LENGTH_SHORT).show();
 
         if (score > bestScore) {
             bestScore = score;
