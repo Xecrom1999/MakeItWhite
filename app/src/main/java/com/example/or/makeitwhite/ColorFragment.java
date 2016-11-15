@@ -4,6 +4,7 @@ package com.example.or.makeitwhite;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -118,6 +119,8 @@ public class ColorFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         taps_left_text = (TextView) view.findViewById(R.id.taps_left_text);
+        Typeface myFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/taps_font.otf");
+        taps_left_text.setTypeface(myFont);
         taps_left_text.setText(tapsLeft+"");
     }
 

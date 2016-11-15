@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         logo = (TextView)findViewById(R.id.make_it_white);
-        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/font1.ttf");
+        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/logo_font.ttf");
         logo.setTypeface(myFont);
     }
 

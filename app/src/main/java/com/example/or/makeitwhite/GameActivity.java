@@ -2,6 +2,7 @@ package com.example.or.makeitwhite;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentManager;
@@ -72,6 +73,8 @@ public class GameActivity extends AppCompatActivity implements Communicator {
 
         timer_text = (TextView) findViewById(R.id.timer_text);
         score_text = (TextView)findViewById(R.id.score_text);
+        Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/score_font.ttf");
+        score_text.setTypeface(myFont);
         score = 0;
 
         fm = getSupportFragmentManager();
