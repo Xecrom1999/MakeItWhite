@@ -1,7 +1,7 @@
 package com.example.or.makeitwhite;
 
 import android.content.Intent;
-import android.graphics.Point;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
@@ -10,23 +10,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Chronometer;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
+import android.widget.Toast;
 
 import java.util.Random;
-import java.util.logging.Handler;
 
 public class GameActivity extends AppCompatActivity implements Communicator {
 
@@ -41,6 +33,10 @@ public class GameActivity extends AppCompatActivity implements Communicator {
     int score;
     FrameLayout gameLayout;
     MediaPlayer gamingMusic;
+    TextView count_down_text;
+    TextView add_time_text;
+    Animation fadeAnimation;
+    Animation floatAnimation;
 
     Runnable updateTimerThread = new Runnable() {
         @Override
@@ -68,9 +64,12 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        fadeAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
+        floatAnimation = AnimationUtils.loadAnimation(this, R.anim.float_anim);
+        floatAnimation.setDuration(1000);
+
         gamingMusic = MediaPlayer.create(this, R.raw.gaming_music);
         gamingMusic.setLooping(true);
-
 
         timer_text = (TextView) findViewById(R.id.timer_text);
         score_text = (TextView)findViewById(R.id.score_text);
@@ -81,6 +80,51 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         fm = getSupportFragmentManager();
         gameLayout = (FrameLayout)findViewById(R.id.gameLayout);
 
+        count_down_text = (TextView) findViewById(R.id.count_down_text);
+        countDown(count_down_text, 3);
+
+        add_time_text = (TextView) findViewById(R.id.add_time_text);
+
+        floatAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                add_time_text.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                add_time_text.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+    }
+
+    private void countDown(final TextView tv, final int count) {
+
+        String[] colors = new String[]{"#66BB6A", "#FFEE58", "#EF5350"};
+
+        if (count == 0) {
+            tv.setText("");
+            startGame();
+            return;
+        }
+        else tv.setTextColor(Color.parseColor(colors[count-1]));
+
+        tv.setText(count+"");
+
+        fadeAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            public void onAnimationEnd(Animation anim) {
+                countDown(tv, count - 1);
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        tv.startAnimation(fadeAnimation);
     }
 
     public void updateScore(){
@@ -97,7 +141,14 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         finish();
     }
 
-    public void requestRandomClick(){
+    public void requestRandomClick(int num) {
+
+        if (num != 0) {
+            float addedTime = (float) (1000 * 0.1 * num);
+            add_time_text.setText("+" + addedTime / 1000);
+            add_time_text.startAnimation(floatAnimation);
+            timeSwapBuff -= addedTime;
+        }
 
         ColorFragment fragment = new ColorFragment();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -116,7 +167,6 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         int y = new Random().nextInt(h) + dpToPx(40);
         gameLayout.setX(x);
         gameLayout.setY(y);
-
     }
 
     public int dpToPx(int dp) {
@@ -125,28 +175,9 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         return px;
     }
 
-    public void startGame(final View v){
-        v.setClickable(false);
+    public void startGame(){
         gamingMusic.start();
-        Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out_anim);
-        v.startAnimation(fadeInAnimation);
-        fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                v.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        requestRandomClick();
+        requestRandomClick(0);
         startTimer();
     }
 

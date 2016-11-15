@@ -43,8 +43,7 @@ public class ColorFragment extends Fragment {
     TextView taps_left_text;
     int tapsLeft;
 
-    public ColorFragment() {
-    }
+    int num_of_taps;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +58,7 @@ public class ColorFragment extends Fragment {
         greenColors = new String[]{"#1B5E20", "#2E7D32", "#388E3C", "#43A047", "#4CAF50", "#66BB6A", "#81C784", "#A5D6A7", "#C8E6C9", "#E8F5E9", "#ffffff"};
         Random rnd1 = new Random();
         position = rnd1.nextInt(8);
+        num_of_taps = 10 - position;
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
         Drawable background1 = layout.getBackground();
         background = (GradientDrawable) background1;
@@ -69,7 +69,7 @@ public class ColorFragment extends Fragment {
         rnd = new Random();
         firstColor = rnd.nextInt(4);
 
-        switch(firstColor){
+        switch(firstColor) {
             case 0:
                 background.setColor(Color.parseColor(blueColors[position]));
                 break;
@@ -128,7 +128,7 @@ public class ColorFragment extends Fragment {
         position += 1;
         if(position == 10){
             active = false;
-            comm.requestRandomClick();
+            comm.requestRandomClick(num_of_taps);
         }
         background.setColor(Color.parseColor(firstColors[position]));
 

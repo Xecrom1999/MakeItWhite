@@ -5,7 +5,6 @@ package com.example.or.makeitwhite;
  */
 interface Communicator {
 
-    public void requestRandomClick();
-    public void updateScore();
-
+    void requestRandomClick(int num_of_taps);
+    void updateScore();
 }

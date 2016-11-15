@@ -34,10 +34,10 @@
         android:background="@drawable/play_button_drawable"
         android:translationZ="16dp"
         />
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     >
 
 

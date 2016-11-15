@@ -7,8 +7,8 @@
         <shape android:shape="rectangle"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <stroke android:width="2dp" android:color="#1E88E5"/>
-            <solid android:color="#1E88E5"/>
+            <stroke android:width="2dp" android:color="#2962FF"/>
+            <solid android:color="#2962FF"/>
             <corners android:radius="7dp"/>
 
         </shape>
@@ -20,7 +20,7 @@
         <shape android:shape="rectangle"
             xmlns:android="http://schemas.android.com/apk/res/android">
 
-            <stroke android:width="2dp" android:color="#1E88E5"/>
+            <stroke android:width="2dp" android:color="#2962FF"/>
             <solid android:color="#E3F2FD"/>
             <corners android:radius="7dp"/>
 
