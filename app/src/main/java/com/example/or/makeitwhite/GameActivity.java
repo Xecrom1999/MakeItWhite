@@ -69,6 +69,7 @@ public class GameActivity extends AppCompatActivity implements Communicator {
         setContentView(R.layout.activity_game);
 
         gamingMusic = MediaPlayer.create(this, R.raw.gaming_music);
+        gamingMusic.setLooping(true);
 
 
         timer_text = (TextView) findViewById(R.id.timer_text);
