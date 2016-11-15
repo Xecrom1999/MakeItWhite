@@ -16,6 +16,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,7 +78,7 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
         score = 0;
 
         fm = getSupportFragmentManager();
-        gameLayout = (FrameLayout)findViewById(R.id.gameLayout);
+        gameLayout = (FrameLayout)findViewById(R.id.game_layout);
 
         count_down_text = (TextView) findViewById(R.id.count_down_text);
         countDown(count_down_text, 3);
@@ -148,13 +149,13 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
         int sizeX = metrics.widthPixels;
         int sizeY = metrics.heightPixels;
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.gameLayout, fragment).commit();
-        int width = new Random().nextInt(dpToPx(200))+75;
-        int height = new Random().nextInt(dpToPx(150))+100;
+        ft.add(R.id.game_layout, fragment).commit();
+        int width = new Random().nextInt(dpToPx(200))+dpToPx(50);
+        int height = new Random().nextInt(dpToPx(200))+dpToPx(50);
         gameLayout.getLayoutParams().width = width;
         gameLayout.getLayoutParams().height = height;
         int w = sizeX - width - dpToPx(40);
-        int h = sizeY - height - dpToPx(60);
+        int h = sizeY - height - dpToPx(80);
         int x = new Random().nextInt(w) + dpToPx(20);
         int y = new Random().nextInt(h) + dpToPx(40);
         gameLayout.setX(x);

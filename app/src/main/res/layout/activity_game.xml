@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/gameLayout"
+        android:id="@+id/game_layout"
         />
 
     <TextView
