@@ -118,6 +118,8 @@ public class ColorFragment extends Fragment {
         position -= 1;
         if(position == 0){
             active = false;
+            if (disappearing_sound.isPlaying())
+                disappearing_sound.stop();
             disappearing_sound.start();
             comm.requestRandomClick(num_of_taps);
         }

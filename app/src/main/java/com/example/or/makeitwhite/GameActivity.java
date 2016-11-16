@@ -39,7 +39,7 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
     private int mX;
     private int mY;
 
-    final int STARTING_TIME_IN_SECONDS = 15;
+    final int STARTING_TIME_IN_SECONDS = 1;
     final double TIME_TO_ADD_IN_SECONDS = 0.1;
 
     Runnable updateTimerThread = new Runnable() {

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import java.util.Random;
 
 public class GameOverActivity extends AppCompatActivity {
 
-    TextView time_text;
+    TextView score_text2;
     TextView best_score_text;
     TextView sumOfTaps;
     TextView funnyComment;
@@ -67,7 +68,7 @@ public class GameOverActivity extends AppCompatActivity {
         gameOver = (TextView)findViewById(R.id.textView2);
         Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/game_over_font.ttf");
         gameOver.setTypeface(font2);
-        time_text = (TextView) findViewById(R.id.score_text);
+        score_text2 = (TextView) findViewById(R.id.score_text2);
         best_score_text = (TextView) findViewById(R.id.best_score_text);
         sumOfTaps = (TextView)findViewById(R.id.all_taps);
         funnyComment = (TextView)findViewById(R.id.funny_comment);
@@ -139,9 +140,9 @@ public class GameOverActivity extends AppCompatActivity {
         }
         int lastSumOfTaps = preferences.getInt("sumOfTaps", 0);
         preferences.edit().putInt("sumOfTaps", lastSumOfTaps + score).commit();
-        sumOfTaps.setText("You have tapped " + (lastSumOfTaps+score) + " times");
-        time_text.setText("Your score: " + score);
-        best_score_text.setText("Best score: " + bestScore);
+        sumOfTaps.setText(Html.fromHtml("You have tapped " + "<b>" + (lastSumOfTaps + score) + "</b>" + " times"));
+        score_text2.setText("" + score);
+        best_score_text.setText(Html.fromHtml("Best score: " + "<i>" + bestScore + "</i>"));
     }
 
     private void requestNewInterstitial() {

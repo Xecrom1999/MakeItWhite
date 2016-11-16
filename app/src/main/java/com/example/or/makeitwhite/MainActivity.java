@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -20,16 +21,7 @@ public class MainActivity extends AppCompatActivity {
     TextView best_score_text;
     TextView sumOfTaps;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
-        int bestScore = preferences.getInt("bestScore", 0);
-        best_score_text.setText("Best score: " + bestScore);
 
-        int taps = preferences.getInt("sumOfTaps", 0);
-        sumOfTaps.setText("You have tapped " + taps + " times");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +44,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
+        int bestScore = preferences.getInt("bestScore", 0);
+        best_score_text.setText(Html.fromHtml("Best score: " + "<i>" + bestScore + "</i>"));
+
+        int taps = preferences.getInt("sumOfTaps", 0);
+        sumOfTaps.setText( Html.fromHtml("You have tapped " + "<b>" + (taps) + "</b>" + " times"));
+    }
+
     public void onClick(View v){
         startActivity(new Intent(this, GameActivity.class));
     }
-
-
 }
