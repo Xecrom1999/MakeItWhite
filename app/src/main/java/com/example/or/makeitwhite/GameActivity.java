@@ -12,13 +12,11 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -38,6 +36,11 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
     TextView count_down_text;
     TextView add_time_text;
     Animation floatAnimation;
+    private int mX;
+    private int mY;
+
+    final int STARTING_TIME_IN_SECONDS = 15;
+    final double TIME_TO_ADD_IN_SECONDS = 0.15;
 
     Runnable updateTimerThread = new Runnable() {
         @Override
@@ -47,12 +50,12 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
             secs = (int) updateTime / 1000;
             mins = secs / 60;
             secs %= 60;
-            if (secs == 15) {
+            if (secs == STARTING_TIME_IN_SECONDS) {
                 gameEnded();
             }
             else {
                 milliseconds = (int) updateTime % 1000;
-                String time = String.format("%02d", 14 - secs) + "." + String.format("%02d", (99 - (milliseconds / 10)));
+                String time = String.format("%02d", STARTING_TIME_IN_SECONDS - 1 - secs) + "." + String.format("%02d", (99 - (milliseconds / 10)));
                 if (mins > 0) time = mins + ":" + time;
                 timer_text.setText(time);
                 handler.postDelayed(this, 0);
@@ -65,13 +68,17 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+
         floatAnimation = AnimationUtils.loadAnimation(this, R.anim.float_anim);
-        floatAnimation.setDuration(1000);
+        floatAnimation.setDuration(500);
 
         gamingMusic = MediaPlayer.create(this, R.raw.gaming_music);
+        gamingMusic.setVolume(0.1f, 0.1f);
         gamingMusic.setLooping(true);
 
         timer_text = (TextView) findViewById(R.id.timer_text);
+        timer_text.setText(STARTING_TIME_IN_SECONDS+".00");
+
         score_text = (TextView)findViewById(R.id.score_text);
         Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/score_font.ttf");
         score_text.setTypeface(myFont);
@@ -137,29 +144,39 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
     public void requestRandomClick(int num) {
 
         if (num != 0) {
-            float addedTime = (float) (1000 * 0.1 * num);
+
+            float addedTime = (float) (1000 * TIME_TO_ADD_IN_SECONDS * num);
             add_time_text.setText("+" + addedTime / 1000);
             add_time_text.startAnimation(floatAnimation);
             timeSwapBuff -= addedTime;
         }
 
-        ColorFragment fragment = new ColorFragment();
-        RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
-        int sizeX = container.getWidth();
-        int sizeY = container.getHeight();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.game_layout, fragment).commit();
-        int width = new Random().nextInt(dpToPx(120))+dpToPx(25);
-        int height = new Random().nextInt(dpToPx(120))+dpToPx(25);
-        gameLayout.getLayoutParams().width = width;
-        gameLayout.getLayoutParams().height = height;
-        int w = sizeX - width - dpToPx(40);
-        int h = sizeY - height - dpToPx(90);
-        int x = new Random().nextInt(w) + dpToPx(30);
-        int y = new Random().nextInt(h) + dpToPx(40);
-        gameLayout.setX(x);
-        gameLayout.setY(y);
-    }
+            ColorFragment fragment = new ColorFragment();
+            RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
+            int sizeX = container.getWidth();
+            int sizeY = container.getHeight();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.game_layout, fragment).commit();
+            int width = new Random().nextInt(dpToPx(120)) + dpToPx(35);
+            gameLayout.getLayoutParams().width = width;
+            gameLayout.getLayoutParams().height = width;
+            int w = sizeX - width - dpToPx(40);
+            int h = sizeY - width - dpToPx(90);
+            int x = new Random().nextInt(w) + dpToPx(30);
+            int y = new Random().nextInt(h) + dpToPx(40);
+            gameLayout.setX(x);
+            gameLayout.setY(y);
+
+            mX = x + width / 2 - add_time_text.getWidth() / 2;
+            mY = y + width / 2 - add_time_text.getHeight() - dpToPx(25);
+
+            if (num == 0) {
+                add_time_text.setX(mX);
+                add_time_text.setY(mY);
+            }
+        }
+
+
 
     public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
@@ -195,11 +212,14 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
     @Override
     public void onAnimationStart(Animation animation) {
         add_time_text.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     public void onAnimationEnd(Animation animation) {
         add_time_text.setVisibility(View.INVISIBLE);
+        add_time_text.setX(mX);
+        add_time_text.setY(mY);
     }
 
     @Override

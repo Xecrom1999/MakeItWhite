@@ -60,8 +60,7 @@ public class ColorFragment extends Fragment {
         Drawable background1 = layout.getBackground();
         background = (GradientDrawable) background1;
         disappearing_sound = MediaPlayer.create(getContext(), R.raw.disappears);
-
-
+        disappearing_sound.setVolume(1f, 1f);
         tapsLeft = position;
 
         firstColor = new Random().nextInt(5);
