@@ -18,6 +18,7 @@ public class GameOverActivity extends AppCompatActivity {
 
     TextView time_text;
     TextView best_score_text;
+    TextView sumOfTaps;
     Intent intent;
     SharedPreferences preferences;
     int bestScore;
@@ -62,6 +63,7 @@ public class GameOverActivity extends AppCompatActivity {
 
         time_text = (TextView) findViewById(R.id.score_text);
         best_score_text = (TextView) findViewById(R.id.best_score_text);
+        sumOfTaps = (TextView)findViewById(R.id.all_taps);
 
         intent = getIntent();
 
@@ -72,7 +74,9 @@ public class GameOverActivity extends AppCompatActivity {
             preferences.edit().putInt("bestScore", bestScore).commit();
             Toast.makeText(getApplicationContext(), "It's a new best score Oh My God! אללה וואכבר", Toast.LENGTH_SHORT).show();
         }
-
+        int lastSumOfTaps = preferences.getInt("sumOfTaps", 0);
+        preferences.edit().putInt("sumOfTaps", lastSumOfTaps + score).commit();
+        sumOfTaps.setText("You have tapped " + (lastSumOfTaps+score) + " times");
         time_text.setText("Your score: " + score);
         best_score_text.setText("Best score: " + bestScore);
     }

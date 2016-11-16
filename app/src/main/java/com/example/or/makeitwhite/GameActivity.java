@@ -144,19 +144,18 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
         }
 
         ColorFragment fragment = new ColorFragment();
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int sizeX = metrics.widthPixels;
-        int sizeY = metrics.heightPixels;
+        RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
+        int sizeX = container.getWidth();
+        int sizeY = container.getHeight();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.game_layout, fragment).commit();
-        int width = new Random().nextInt(dpToPx(200))+dpToPx(50);
-        int height = new Random().nextInt(dpToPx(200))+dpToPx(50);
+        int width = new Random().nextInt(dpToPx(120))+dpToPx(25);
+        int height = new Random().nextInt(dpToPx(120))+dpToPx(25);
         gameLayout.getLayoutParams().width = width;
         gameLayout.getLayoutParams().height = height;
         int w = sizeX - width - dpToPx(40);
-        int h = sizeY - height - dpToPx(80);
-        int x = new Random().nextInt(w) + dpToPx(20);
+        int h = sizeY - height - dpToPx(90);
+        int x = new Random().nextInt(w) + dpToPx(30);
         int y = new Random().nextInt(h) + dpToPx(40);
         gameLayout.setX(x);
         gameLayout.setY(y);

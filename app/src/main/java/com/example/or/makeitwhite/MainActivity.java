@@ -18,19 +18,23 @@ public class MainActivity extends AppCompatActivity {
 
     TextView logo;
     TextView best_score_text;
+    TextView sumOfTaps;
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("ooooooo", "onStart");
         SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
         int bestScore = preferences.getInt("bestScore", 0);
         best_score_text.setText("Best score: " + bestScore);
+
+        int taps = preferences.getInt("sumOfTaps", 0);
+        sumOfTaps.setText("You have tapped " + taps + " times");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-8045128595154184~9448495752");
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Typeface myFont = Typeface.createFromAsset(getAssets(), "fonts/logo_font.ttf");
         logo.setTypeface(myFont);
 
-
+        sumOfTaps = (TextView)findViewById(R.id.text);
         best_score_text = (TextView) findViewById(R.id.best_score_text);
 
     }

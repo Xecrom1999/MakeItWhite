@@ -1,15 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- android:background="#ECEFF1" -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECEFF1"
+    android:background="@drawable/back_background"
     tools:context="com.example.or.makeitwhite.GameActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:id="@+id/container"
+        android:layout_margin="30dp"
+        android:elevation="30dp"
+        android:alpha="0.8"
+        />
+
+
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/game_layout"
+        android:elevation="50dp"
         />
 
     <TextView
@@ -19,6 +32,7 @@
         android:text="0"
         android:textColor="@android:color/primary_text_light"
         android:textSize="30dp"
+        android:elevation="700dp"
         android:textStyle="bold"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
@@ -34,6 +48,7 @@
         android:textSize="30dp"
         android:layout_marginLeft="15dp"
         android:textStyle="italic"
+        android:elevation="70dp"
         android:layout_alignBaseline="@+id/score_text"
         />
 
@@ -45,6 +60,7 @@
         android:textSize="150dp"
         android:textStyle="bold"
         android:text="3"
+        android:elevation="100dp"
         android:id="@+id/count_down_text"
         />
 
@@ -60,5 +76,6 @@
         android:layout_marginStart="32dp"
         android:textStyle="bold"
         android:visibility="invisible"/>
+
 
 </RelativeLayout>

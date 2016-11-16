@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class ColorFragment extends Fragment {
     GradientDrawable background;
     TextView taps_left_text;
     int tapsLeft;
+    MediaPlayer disappearing_sound;
 
     int num_of_taps;
 
@@ -52,35 +54,38 @@ public class ColorFragment extends Fragment {
 
         active = true;
         comm = (Communicator)getActivity();
-        blueColors = new String[]{"#0D47A1", "#1565C0", "#1976D2", "#1E88E5", "#2196F3", "#42A5F5", "#64B5F6", "#90CAF9", "#BBDEFB", "#E3F2FD", "#ffffff"};
-        redColors = new String[]{"#B71C1C", "#C62828", "#D32F2F", "#E53935", "#F44336", "#EF5350", "#E57373", "#EF9A9A", "#FFCDD2", "#FFEBEE", "#ffffff"};
-        yellowColors = new String[]{"#F57F17", "#F9A825", "#FBC02D", "#FDD835", "#FFEB3B", "#FFEE58", "#FFF176", "#FFF59D", "#FFF9C4", "#FFFDE7", "#ffffff"};
-        greenColors = new String[]{"#1B5E20", "#2E7D32", "#388E3C", "#43A047", "#4CAF50", "#66BB6A", "#81C784", "#A5D6A7", "#C8E6C9", "#E8F5E9", "#ffffff"};
-        Random rnd1 = new Random();
-        position = rnd1.nextInt(8);
-        num_of_taps = 10 - position;
+        position = new Random().nextInt(8)+3;
+        num_of_taps = position;
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
         Drawable background1 = layout.getBackground();
         background = (GradientDrawable) background1;
+        disappearing_sound = MediaPlayer.create(getContext(), R.raw.disappears);
 
-        tapsLeft = 10 - position;
 
-        Random rnd;
-        rnd = new Random();
-        firstColor = rnd.nextInt(4);
+        tapsLeft = position;
+
+        firstColor = new Random().nextInt(5);
 
         switch(firstColor) {
             case 0:
-                background.setColor(Color.parseColor(blueColors[position]));
+                //blue
+                background.setColor(Color.parseColor("#00E5FF"));
                 break;
             case 1:
-                background.setColor(Color.parseColor(redColors[position]));
+                //red
+                background.setColor(Color.parseColor("#ff0000"));
                 break;
             case 2:
-                background.setColor(Color.parseColor(yellowColors[position]));
+                //yellow
+                background.setColor(Color.parseColor("#FFEB3B"));
                 break;
             case 3:
-                background.setColor(Color.parseColor(greenColors[position]));
+                //green
+                background.setColor(Color.parseColor("#76FF03"));
+                break;
+            case 4:
+                //pink
+                background.setColor(Color.parseColor("#E040FB"));
                 break;
 
         }
@@ -89,21 +94,7 @@ public class ColorFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(active) {
-                    switch (firstColor) {
-                        case 0:
-                            lowerColor(blueColors);
-                            break;
-                        case 1:
-                            lowerColor(redColors);
-                            break;
-                        case 2:
-                            lowerColor(yellowColors);
-                            break;
-                        case 3:
-                            lowerColor(greenColors);
-                            break;
-                    }
-
+                    lowerColor();
                 }
                 comm.updateScore();
                 tapsLeft -= 1;
@@ -124,13 +115,17 @@ public class ColorFragment extends Fragment {
         taps_left_text.setText(tapsLeft+"");
     }
 
-    public void lowerColor(String[] firstColors){
-        position += 1;
-        if(position == 10){
+    public void lowerColor(){
+        position -= 1;
+        if(position == 0){
             active = false;
+            disappearing_sound.start();
             comm.requestRandomClick(num_of_taps);
         }
-        background.setColor(Color.parseColor(firstColors[position]));
+        AlphaAnimation alpha = new AlphaAnimation((position+1)/10F, position/10F);
+        alpha.setDuration(0);
+        alpha.setFillAfter(true);
+        v.startAnimation(alpha);
 
     }
 
