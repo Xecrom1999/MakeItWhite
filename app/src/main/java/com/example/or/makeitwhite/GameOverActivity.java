@@ -2,6 +2,7 @@ package com.example.or.makeitwhite;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ public class GameOverActivity extends AppCompatActivity {
     TextView time_text;
     TextView best_score_text;
     TextView sumOfTaps;
+    TextView funnyComment;
+    TextView gameOver;
     Intent intent;
     SharedPreferences preferences;
     int bestScore;
@@ -61,18 +64,78 @@ public class GameOverActivity extends AppCompatActivity {
 
         bestScore = preferences.getInt("bestScore", 0);
 
+        gameOver = (TextView)findViewById(R.id.textView2);
+        Typeface font2 = Typeface.createFromAsset(getAssets(), "fonts/game_over_font.ttf");
+        gameOver.setTypeface(font2);
         time_text = (TextView) findViewById(R.id.score_text);
         best_score_text = (TextView) findViewById(R.id.best_score_text);
         sumOfTaps = (TextView)findViewById(R.id.all_taps);
+        funnyComment = (TextView)findViewById(R.id.funny_comment);
+        Typeface font1 = Typeface.createFromAsset(getAssets(), "fonts/funny_comment_font.ttf");
+        funnyComment.setTypeface(font1);
 
         intent = getIntent();
 
         int score = intent.getIntExtra("score",0);
 
+
         if (score > bestScore) {
             bestScore = score;
             preferences.edit().putInt("bestScore", bestScore).commit();
             Toast.makeText(getApplicationContext(), "It's a new best score Oh My God! אללה וואכבר", Toast.LENGTH_SHORT).show();
+        }
+
+        if(score+100<=bestScore){
+            switch(new Random().nextInt(3)){
+                case 0:
+                    funnyComment.setText("Really lame...What happend?! Are you on drugs?");
+                    break;
+                case 1:
+                    funnyComment.setText("Did someone hit you in the head?!");
+                    break;
+                case 2:
+                    funnyComment.setText("We suggest you to check if your brain is healthy");
+                    break;
+            }
+        }
+        else if(score+50<=bestScore){
+            switch(new Random().nextInt(3)){
+                case 0:
+                    funnyComment.setText("You are a real loser. Go take some Ritalin");
+                    break;
+                case 1:
+                    funnyComment.setText("Can't you do a little better than this? A dead man can try harder");
+                    break;
+                case 2:
+                    funnyComment.setText("You should drink more Cofee");
+                    break;
+            }
+        }
+        else if(score+25<=bestScore){
+            switch(new Random().nextInt(3)){
+                case 0:
+                    funnyComment.setText("You were close, you probably just forgot to take steroids today");
+                    break;
+                case 1:
+                    funnyComment.setText("Concentrate!! Stop checking out people while you're playing");
+                    break;
+                case 2:
+                    funnyComment.setText("You are good but you should work your arms better at the gym");
+                    break;
+            }
+        }
+        else {
+            switch(new Random().nextInt(3)){
+                case 0:
+                    funnyComment.setText("Go bang your head on the wall 3 times as a punishment. You were so close!!");
+                    break;
+                case 1:
+                    funnyComment.setText("Why do you hate yourself?! Couldn't you just break the record?!");
+                    break;
+                case 2:
+                    funnyComment.setText("You are so stupid!!! You were so close!!!");
+                    break;
+            }
         }
         int lastSumOfTaps = preferences.getInt("sumOfTaps", 0);
         preferences.edit().putInt("sumOfTaps", lastSumOfTaps + score).commit();
