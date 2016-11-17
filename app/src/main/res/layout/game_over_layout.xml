@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="#b5ecea"
     tools:context="com.example.or.makeitwhite.GameOverActivity">
     <ImageView
@@ -141,7 +142,7 @@
             android:id="@+id/best_score_text"
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             />
 
         <TextView
@@ -174,5 +175,14 @@
             android:text="Play Again" />
 
     </LinearLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-8045128595154184/5853960551"
+        android:layout_marginBottom="8dp"/>
 
 </RelativeLayout>

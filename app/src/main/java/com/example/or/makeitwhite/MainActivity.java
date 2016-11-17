@@ -28,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-8045128595154184~9448495752");
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("5367E3475FFB1BB172548F52E51DC504")
-                .build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
         logo = (TextView)findViewById(R.id.make_it_white);

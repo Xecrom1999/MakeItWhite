@@ -12,7 +12,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Random;
 
@@ -35,11 +37,14 @@ public class GameOverActivity extends AppCompatActivity {
         setContentView(R.layout.game_over_layout);
 
         preferences = getSharedPreferences("Data", MODE_PRIVATE);
-
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-8045128595154184~9448495752");
+        AdView mAdView = (AdView) findViewById(R.id.adView1);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         f = false;
 
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-8045128595154184/2760893356");
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
