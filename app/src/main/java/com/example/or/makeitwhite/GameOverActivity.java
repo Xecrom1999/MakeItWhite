@@ -142,7 +142,7 @@ public class GameOverActivity extends AppCompatActivity {
         else{
             switch(new Random().nextInt(3)){
                 case 0:
-                    funnyComment.setText("WOW!! You broke your record, your next step is running to be the president of the United States");
+                    funnyComment.setText("WOW!! You broke your record, you can now to be the president of the United States");
                     break;
                 case 1:
                     funnyComment.setText("You have special skills. You should have a lot of kids in order to improve the world");
