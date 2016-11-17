@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/colorBackground"
     android:background="@drawable/item_drawable"
-    tools:context="com.example.or.makeitwhite.ColorFragment">
+    tools:context="com.app.or.makeitwhite.ColorFragment">
 
 <TextView
     android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.or.makeitwhite;
+package com.app.or.makeitwhite;
 
 import org.junit.Test;
 
