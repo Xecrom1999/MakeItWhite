@@ -177,19 +177,22 @@
             android:layout_marginTop="20dp"
             android:text="Play Again" />
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentBottom="true"
+            ads:adUnitId="ca-app-pub-8045128595154184/5853960551"
+            />
+
+
 
 
     </LinearLayout>
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        android:layout_alignParentBottom="true"
-        ads:adUnitId="ca-app-pub-8045128595154184/5853960551"
-        />
 
 
 </RelativeLayout>
