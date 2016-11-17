@@ -38,6 +38,7 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
     Animation floatAnimation;
     private int mX;
     private int mY;
+    MediaPlayer disappearing_sound;
 
     final int STARTING_TIME_IN_SECONDS = 15;
     final double TIME_TO_ADD_IN_SECONDS = 0.1;
@@ -68,6 +69,8 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        disappearing_sound = MediaPlayer.create(this, R.raw.disappears);
+        disappearing_sound.setVolume(1f, 1f);
 
         floatAnimation = AnimationUtils.loadAnimation(this, R.anim.float_anim);
         floatAnimation.setDuration(500);
@@ -149,6 +152,10 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
             add_time_text.setText("+" + addedTime / 1000);
             add_time_text.startAnimation(floatAnimation);
             timeSwapBuff -= addedTime;
+
+            if (disappearing_sound.isPlaying())
+                disappearing_sound.stop();
+            disappearing_sound.start();
         }
 
             ColorFragment fragment = new ColorFragment();
@@ -157,7 +164,7 @@ public class GameActivity extends AppCompatActivity implements Communicator, Ani
             int sizeY = container.getHeight();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.game_layout, fragment).commit();
-            int width = new Random().nextInt(dpToPx(120)) + dpToPx(35);
+            int width = new Random().nextInt(dpToPx(120)) + dpToPx(60);
             gameLayout.getLayoutParams().width = width;
             gameLayout.getLayoutParams().height = width;
             int w = sizeX - width - dpToPx(40);

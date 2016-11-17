@@ -80,11 +80,7 @@ public class GameOverActivity extends AppCompatActivity {
         int score = intent.getIntExtra("score",0);
 
 
-        if (score > bestScore) {
-            bestScore = score;
-            preferences.edit().putInt("bestScore", bestScore).commit();
-            Toast.makeText(getApplicationContext(), "It's a new best score Oh My God! אללה וואכבר", Toast.LENGTH_SHORT).show();
-        }
+
 
         if(score+100<=bestScore){
             switch(new Random().nextInt(3)){
@@ -125,7 +121,7 @@ public class GameOverActivity extends AppCompatActivity {
                     break;
             }
         }
-        else {
+        else if(score <= bestScore){
             switch(new Random().nextInt(3)){
                 case 0:
                     funnyComment.setText("Go bang your head on the wall 3 times as a punishment. You were so close!!");
@@ -138,11 +134,29 @@ public class GameOverActivity extends AppCompatActivity {
                     break;
             }
         }
+        else{
+            switch(new Random().nextInt(3)){
+                case 0:
+                    funnyComment.setText("WOW!! You broke your record, your next step is running to be the presedent of the United State");
+                    break;
+                case 1:
+                    funnyComment.setText("You have special skills. You should have a lot of kids in order to improve the world");
+                    break;
+                case 2:
+                    funnyComment.setText("Are you a bird? Are you a plane? No!! You are Superman!!!");
+                    break;
+            }
+        }
+
+        if (score > bestScore) {
+            bestScore = score;
+            preferences.edit().putInt("bestScore", bestScore).commit();
+        }
         int lastSumOfTaps = preferences.getInt("sumOfTaps", 0);
         preferences.edit().putInt("sumOfTaps", lastSumOfTaps + score).commit();
         sumOfTaps.setText(Html.fromHtml("You have tapped " + "<b>" + (lastSumOfTaps + score) + "</b>" + " times"));
         score_text2.setText("" + score);
-        best_score_text.setText(Html.fromHtml("Best score: " + "<i>" + bestScore + "</i>"));
+        best_score_text.setText(Html.fromHtml("Best score: " + "<b>" + bestScore + "</b>"));
     }
 
     private void requestNewInterstitial() {

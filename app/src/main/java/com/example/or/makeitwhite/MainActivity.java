@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
     TextView best_score_text;
     TextView sumOfTaps;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         sumOfTaps = (TextView)findViewById(R.id.text);
         best_score_text = (TextView) findViewById(R.id.best_score_text);
-
     }
 
     @Override
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         SharedPreferences preferences = getSharedPreferences("Data", MODE_PRIVATE);
         int bestScore = preferences.getInt("bestScore", 0);
-        best_score_text.setText(Html.fromHtml("Best score: " + "<i>" + bestScore + "</i>"));
+        best_score_text.setText(Html.fromHtml("Best score: " + "<b>" + bestScore + "</b>"));
 
         int taps = preferences.getInt("sumOfTaps", 0);
         sumOfTaps.setText( Html.fromHtml("You have tapped " + "<b>" + (taps) + "</b>" + " times"));

@@ -33,18 +33,12 @@ public class ColorFragment extends Fragment {
     RelativeLayout layout;
     Communicator comm;
     boolean active;
-    String[] blueColors;
-    String[] redColors;
-    String[] yellowColors;
-    String[] greenColors;
     int position;
     int firstColor;
     View v;
     GradientDrawable background;
     TextView taps_left_text;
     int tapsLeft;
-    MediaPlayer disappearing_sound;
-
     int num_of_taps;
 
     @Override
@@ -59,8 +53,6 @@ public class ColorFragment extends Fragment {
         layout = (RelativeLayout)v.findViewById(R.id.colorBackground);
         Drawable background1 = layout.getBackground();
         background = (GradientDrawable) background1;
-        disappearing_sound = MediaPlayer.create(getContext(), R.raw.disappears);
-        disappearing_sound.setVolume(1f, 1f);
         tapsLeft = position;
 
         firstColor = new Random().nextInt(5);
@@ -86,8 +78,12 @@ public class ColorFragment extends Fragment {
                 //pink
                 background.setColor(Color.parseColor("#E040FB"));
                 break;
-
         }
+
+        AlphaAnimation alpha = new AlphaAnimation((position)/10F, position/10F);
+        alpha.setDuration(0);
+        alpha.setFillAfter(true);
+        v.startAnimation(alpha);
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,9 +114,6 @@ public class ColorFragment extends Fragment {
         position -= 1;
         if(position == 0){
             active = false;
-            if (disappearing_sound.isPlaying())
-                disappearing_sound.stop();
-            disappearing_sound.start();
             comm.requestRandomClick(num_of_taps);
         }
         AlphaAnimation alpha = new AlphaAnimation((position+1)/10F, position/10F);
