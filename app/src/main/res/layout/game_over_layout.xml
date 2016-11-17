@@ -81,7 +81,7 @@
         android:src="@drawable/item_drawable"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="258dp"
         android:layout_marginLeft="90dp"
         />
     <ImageView
@@ -94,95 +94,94 @@
         android:layout_marginTop="350dp"
         android:layout_marginLeft="-50dp"
         />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Game Over"
-        android:id="@+id/textView2"
-        android:textSize="60sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:gravity="center_horizontal"
-        android:text="funny comment"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:textColor="#FF5722"
-        android:id="@+id/funny_comment"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal"
-        />
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="70sp"
-        android:text="235"
-        android:id="@+id/score_text2"
-        android:textColor="#2962FF"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:textStyle="bold"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Game Over"
+            android:id="@+id/textView2"
+            android:textSize="60sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Best score: "
-        android:textColor="@android:color/primary_text_light"
-        android:id="@+id/best_score_text"
-        android:layout_gravity="center"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:textSize="22sp"
+            android:gravity="center_horizontal"
+            android:text="funny comment dasdas dasdas sada asdas asdasd asdasd dasdas asdasd asdads"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="#FF5722"
+            android:id="@+id/funny_comment"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="You have tapped"
-        android:textColor="@android:color/secondary_text_light"
-        android:id="@+id/all_taps"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="70sp"
+            android:text="235"
+            android:id="@+id/score_text2"
+            android:textColor="#2962FF"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:textSize="30sp"
-        android:textAllCaps="false"
-        android:id="@+id/button"
-        android:gravity="center"
-        android:textColor="@drawable/play_button_text"
-        android:layout_gravity="center_horizontal"
-        android:textStyle="bold"
-        android:background="@drawable/play_button_drawable"
-        android:translationZ="16dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:onClick="playAgain"
-        android:layout_marginTop="20dp"
-        android:text="Play Again" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Best score: "
+            android:textColor="@android:color/primary_text_light"
+            android:id="@+id/best_score_text"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
+            />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="You have tapped"
+            android:textColor="@android:color/secondary_text_light"
+            android:id="@+id/all_taps"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="30sp"
+            android:textAllCaps="false"
+            android:id="@+id/button"
+            android:gravity="center"
+            android:textColor="@drawable/play_button_text"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:background="@drawable/play_button_drawable"
+            android:translationZ="16dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:onClick="playAgain"
+            android:layout_marginTop="20dp"
+            android:text="Play Again" />
 
+    </LinearLayout>
 
 </RelativeLayout>
