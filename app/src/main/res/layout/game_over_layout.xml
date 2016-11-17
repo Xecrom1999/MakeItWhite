@@ -92,8 +92,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_above="@+id/adView2"
+        android:layout_marginBottom="20dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -188,7 +189,7 @@
         ads:adSize="BANNER"
         android:layout_alignParentBottom="true"
         ads:adUnitId="ca-app-pub-8045128595154184/5853960551"
-        android:layout_marginTop="25dp"/>
+        />
 
 
 </RelativeLayout>
