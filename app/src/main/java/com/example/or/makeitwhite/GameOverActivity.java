@@ -36,11 +36,11 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_over_layout);
 
-        preferences = getSharedPreferences("Data", MODE_PRIVATE);
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-8045128595154184~9448495752");
-        AdView mAdView = (AdView) findViewById(R.id.adView1);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
+
+        AdView mAdView = (AdView) findViewById(R.id.adView2);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest1);
         f = false;
 
         mInterstitialAd = new InterstitialAd(this);
@@ -60,14 +60,14 @@ public class GameOverActivity extends AppCompatActivity {
             public void onAdLoaded() {
                 super.onAdLoaded();
 
-                int num = new Random().nextInt(2) + 1;
+                int num = new Random().nextInt(2);
 
-                if (num == 1) return;
+                if (num == 0) return;
                 mInterstitialAd.show();
             }
         });
 
-
+        preferences = getSharedPreferences("Data", MODE_PRIVATE);
         bestScore = preferences.getInt("bestScore", 0);
 
         gameOver = (TextView)findViewById(R.id.textView2);
