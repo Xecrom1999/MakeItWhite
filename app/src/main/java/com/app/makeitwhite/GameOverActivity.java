@@ -1,4 +1,4 @@
-package com.example.or.makeitwhite;
+package com.app.or.makeitwhite;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.Random;
 

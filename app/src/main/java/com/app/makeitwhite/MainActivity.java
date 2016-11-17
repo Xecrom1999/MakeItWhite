@@ -1,4 +1,4 @@
-package com.example.or.makeitwhite;
+package com.app.or.makeitwhite;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,10 +6,8 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

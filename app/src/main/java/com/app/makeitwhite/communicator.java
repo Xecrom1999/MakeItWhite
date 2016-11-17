@@ -1,4 +1,4 @@
-package com.example.or.makeitwhite;
+package com.app.or.makeitwhite;
 
 /**
  * Created by Or on 30/10/2016.
